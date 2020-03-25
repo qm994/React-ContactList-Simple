@@ -37,17 +37,22 @@ class ListContacts extends React.Component{
     static propTypes = {
         contacts: PropTypes.array.isRequired,
         onDeleteContact: PropTypes.func.isRequired
-    }
+    };
 
     state = {
         query: ""
-    }
+    };
 
     updateQuery = (query) => {
         this.setState(() => ({
             query: query.trim()
         }))
+    };
+
+    clearQuery = () => {
+        this.updateQuery("");
     }
+
     render(){
         const {query} = this.state;
         const {contacts, onDeleteContact} = this.props;
@@ -56,7 +61,7 @@ class ListContacts extends React.Component{
             ? contacts
             : contacts.filter((contact) => (
                 contact.name.toLowerCase().includes(query.toLowerCase())
-            ));
+            ) );
 
 
         return(
@@ -71,7 +76,14 @@ class ListContacts extends React.Component{
                         onChange={(event) => {this.updateQuery(event.target.value)}}
                     />
                 </div>
-
+                {showingContacts.length !== contacts.length && (
+                    <div className="showing-contacts">
+                        <span>
+                            Now showing {showingContacts.length} of {contacts.length}
+                        </span> 
+                        <button onClick={this.clearQuery}> Show All </button>                     
+                    </div>
+                )}
                 <ol className='contact-list'>
                     {showingContacts.map((contact) => (
                         <li key={contact.id} className="contact-list-item">
@@ -80,7 +92,7 @@ class ListContacts extends React.Component{
                             // fist pair of curly braces for JS and second one for the object
                             style={{
                                 backgroundImage: `url(${contact.avatarURL})`
-                            }}>
+                             }}>
                             </div>
 
                             <div className="contact-details">
