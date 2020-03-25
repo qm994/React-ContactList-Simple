@@ -6,7 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
 ReactDOM.render(
-    // whenever the url in App compo changes, the ui also change
+    // whenever the url in App compo changes, the ui also change 
     <BrowserRouter>
         <App />
     </BrowserRouter>,
